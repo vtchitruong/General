@@ -1,6 +1,6 @@
 Test for primality.  
 
-## Constraints
+### Constraints
 1 <= q <= 30  
 1 <= value <= 2 x 10^9
 
