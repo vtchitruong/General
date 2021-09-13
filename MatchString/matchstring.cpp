@@ -37,7 +37,7 @@ void Input()
     f.close();
 }
 
-vector<int> Process()
+vector<int> MatchStrings()
 {
     map<string, int> m;
 
@@ -57,7 +57,7 @@ vector<int> Process()
 
 void Output()
 {
-    vector<int> result = Process();
+    vector<int> result = MatchStrings();
 
     ofstream f;
     f.open(outputFile);
