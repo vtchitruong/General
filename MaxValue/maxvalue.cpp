@@ -5,7 +5,7 @@
 
 using namespace std;
 
-typedef long long lol;
+typedef long long lol; // đặt tên mới cho kiểu long long
 
 int n; // number of elements
 int m; // number of queries
@@ -42,10 +42,12 @@ lol maxvalue()
         b = query[i][1];
         k = query[i][2];
 
-        s[a] += (lol) k; // cast ép kiểu
+        // cộng k vào phần tử s[a], và trừ k ở phần tử s[b + 1]
+        s[a] += (lol) k; // cast (ép kiểu)
         if (b + 1 < s.size()) s[b + 1] -= k;
     }
 
+    // cộng dồn các phần tử trong mảng sẽ tìm được giá trị lớn nhất
     lol sumMax = 0;
     lol sumTmp = s[0];
     for (int i = 1; i < s.size(); ++i)
