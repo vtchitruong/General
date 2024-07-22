@@ -1,114 +1,46 @@
-#include <bits/stdc++.h>
-
-#define inputFile "prime2.inp"
-#define outputFile "prime2.out"
+#include <iostream>
 
 using namespace std;
 
-const int M = 1E8;
-
-int q; // number of values to be tested
-vector<int> value;
-
-bitset<M> prime;
-
-void Input()
-{
-    ifstream f;
-    f.open(inputFile);
-
-    f >> q;
-
-    int v;
-    for (int i = 0; i < q; ++i)
-    {
-        f >> v;
-        value.push_back(v);
-    }
-
-    f.close();
-}
-
-void Init()
-{
-    prime.set(); // set bit 1 for all
-    
-    prime[1] = 0; // 1 is not prime
-}
-
-void Sieve() // Sieve of Eratosthenes
-{
-    Init();
-
-    // duyệt từ 2 đến căn của n
-    for (int i = 2; i * i <= M; ++i)
-    {
-        // nếu i nào là nguyên tố, thì đánh dấu các bội của i là bit 0, tức không phải nguyên tố
-        if (prime[i])
-        {
-            for (int k = i * 2; k <= M; k += i)
-            {
-                prime[k] = 0;
-            }
-        }
-    }
-}
-
+// Hàm kiểm tra tính nguyên tố
 bool isPrime(int n)
 {
+    // Số âm, 0, 1 không là nguyên tố
     if (n < 2) return false;
+
+    // 2 và 3 là nguyên tố
     if (n < 4) return true;
+
+    // Hoặc chia hết cho 2, hoặc chia hết cho 3 thì không là nguyên tố
     if (n % 2 == 0) return false;
+    if (n % 3 == 0) return false;
     
-    int sqn = sqrt(n);
-    for (int i = 2; i <= sqn; ++i)
+    // Kiểm tra n có chia hết cho 5, 7, 11, 13, 17, 19, v.v...
+    for (int i = 5; i * i <= n; i += 6)
     {
         if (n % i == 0) return false;
+        if (n % (i + 2) == 0) return false;
     }
+
     return true;
 }
 
-void Output()
-{
-    vector<string> res;
-    bool r;
-    for (int i = 0; i < value.size(); ++i)
-    {
-        if (value[i] < M) // call Sieve for small value
-        {
-            r = prime[value[i]];
-            if (r)
-                res.push_back("Prime");
-            else
-                res.push_back("Not prime");
-        }
-        else
-        {
-            if (isPrime(value[i])) // call isPrime for big value
-                res.push_back("Prime");
-            else
-                res.push_back("Not prime");
-        }        
-    }
-
-    ofstream f;
-    f.open(outputFile);
-
-    for (int i = 0; i < res.size(); ++i)
-    {
-        f << res[i];
-        if (!(i == res.size() - 1)) f << '\n';
-    }
-
-    f.close();
-}
 
 int main()
 {
-    Input();
+    // Các số cần kiểm tra tính nguyên tố
+    int numbers[] = {-1, 0, 1, 2, 3, 4, 5, 100000031, 100000032, 100000033, 100000037, 100000039};
+    
+    // Số phần tử của mảng numbers
+    int size = 12; 
 
-    Sieve();
-    Output();
+    // In ra kết quả
+    for (int i = 0; i < size; i++)
+    {
+        bool check = isPrime(numbers[i]);
+
+        cout << numbers[i] << ": " << check << endl;
+    }
 
     return 0;
 }
